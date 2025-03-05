@@ -1,0 +1,111 @@
+# Sistema de Biblioteca API
+
+API para la gestión de una biblioteca utilizando el patrón de diseño Fachada. Permite registrar y buscar libros, usuarios y gestionar préstamos de libros.
+
+## Acceso a la API
+
+1. **Desde el servidor en producción:**
+   - Puedes acceder a la documentación Swagger en: [https://fachada-project.onrender.com/api/docs/](https://fachada-project.onrender.com/api/docs/)
+   - Nota: El enlace principal no tiene una interfaz gráfica, por lo que no redirige a ninguna página visible.
+
+2. **Ejecutar en local:**
+   - Clona el repositorio o descarga el archivo ZIP y descomprímelo.
+   - Abre el proyecto en tu editor favorito.
+   - Crea un entorno virtual y activa la dependencia de los paquetes:
+     ```bash
+     python -m venv venv
+     source venv/bin/activate  # En Linux/macOS
+     venv\Scripts\activate  # En Windows
+     pip install -r requirements.txt
+     ```
+   - Modifica el archivo `run.py`:
+     - Descomenta:
+       ```python
+       # from app import create_app
+       # app = create_app()
+       # if __name__ == 'main':
+       #     app.run(debug=True)
+       ```
+     - Comenta la configuración de producción para habilitar el entorno local.
+   - Ejecuta el servidor con:
+     ```bash
+     python run.py
+     ```
+   - Accede a la documentación en: [https://localhost/api/docs/](https://localhost/api/docs/)
+
+## Estructura del Proyecto
+
+```
+biblioteca_sistema/
+│-- requirements.txt
+│-- run.py
+│-- venv/ (entorno virtual)
+│-- app/
+│   │-- __init__.py
+│   │-- models/
+│   │   │-- __init__.py
+│   │   │-- libro.py
+│   │   │-- prestamo.py
+│   │   │-- usuario.py
+│   │-- services/
+│   │   │-- __init__.py
+│   │   │-- libro_service.py
+│   │   │-- prestamo_service.py
+│   │   │-- usuario_service.py
+│   │-- facades/
+│   │   │-- __init__.py
+│   │   │-- biblioteca_facade.py
+│   │-- static/
+│   │   │-- swagger.json
+│   │-- routes/
+│   │   │-- __init__.py
+│   │   │-- libro_routes.py
+│   │   │-- prestamo_routes.py
+│   │   │-- usuario_routes.py
+│   │-- utils/
+│   │   │-- __init__.py
+│   │   │-- database.py
+```
+
+### Uso del Patrón Fachada
+
+El patrón Fachada se implementa a través de la clase `BibliotecaFacade`, que actúa como un punto de acceso unificado a los distintos servicios (`LibroService`, `UsuarioService` y `PrestamoService`).
+
+- **Ejemplo de implementación en `biblioteca_facade.py`:**
+  ```python
+  class BibliotecaFacade:
+      def __init__(self):
+          self.libro_service = LibroService()
+          self.usuario_service = UsuarioService()
+          self.prestamo_service = PrestamoService()
+
+      def registrar_libro(self, titulo, autor, categoria, isbn):
+          libro = Libro(titulo, autor, categoria, isbn)
+          return self.libro_service.crear_libro(libro)
+  ```
+  
+Este diseño simplifica la interacción con los servicios y desacopla la lógica de la aplicación.
+
+## Endpoints Disponibles
+
+### **Libros**
+- `POST /libros` → Crear un nuevo libro.
+- `GET /libros` → Listar todos los libros.
+- `GET /libros/buscar/isbn?isbn={isbn}` → Buscar libros por ISBN.
+- `GET /libros/buscar/titulo?titulo={titulo}` → Buscar libros por título.
+- `GET /libros/buscar/autor?autor={autor}` → Buscar libros por autor.
+- `DELETE /libros/{libro_id}` → Eliminar un libro.
+
+### **Usuarios**
+- `POST /usuarios` → Registrar un nuevo usuario.
+- `GET /usuarios` → Listar todos los usuarios.
+- `GET /usuarios/buscar/email?email={email}` → Buscar usuarios por email.
+- `DELETE /usuarios/{usuario_id}` → Eliminar un usuario.
+
+### **Préstamos**
+- `POST /prestamos` → Realizar un préstamo de libro.
+- `GET /prestamos` → Listar todos los préstamos.
+- `POST /prestamos/{prestamo_id}/devolver` → Devolver un libro prestado.
+
+
+
