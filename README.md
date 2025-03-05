@@ -1,6 +1,5 @@
 # Proyecto de Implementación del Patrón Fachada en Flask
 
-## Autor
 - **Nombre:** Gerardo Isidro Herrera Pacheco
 - **Matrícula:** ISC 68612
 - **Semestre:** 8vo
@@ -15,7 +14,7 @@ API para la gestión de una biblioteca utilizando el patrón de diseño Fachada.
 ## Acceso a la API
 
 1. **Desde el servidor en producción:**
-   - Puedes acceder a la documentación Swagger en: [https://fachada-project.onrender.com/api/docs/](https://fachada-project.onrender.com/api/docs/)
+   - Puedes acceder a la documentación Swagger en: [https://fachada-project.onrender.com/api/docs/](https://fachada-project.onrender.com/api/docs/) 
    - Nota: El enlace principal no tiene una interfaz gráfica, no está implementado, solo la interfaz de la API, por lo que no redirige a ninguna página visible.
 
 2. **Ejecutar en local:**
