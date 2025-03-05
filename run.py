@@ -9,7 +9,7 @@ from flask_cors import CORS
 from app import create_app
 
 app = create_app()
-CORS(app)  # Habilita CORS para toda la API
+CORS(app)  # Habilita CORS en toda la API
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)  # Asegura que Render lo ejecute en el puerto correcto
+port = int(os.environ.get("PORT", 10000))  # Render asigna el puerto automáticamente
+app.run(host="0.0.0.0", port=port)
