@@ -1,0 +1,234 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Sistema de Biblioteca API",
+        "description": "API para gestión de biblioteca utilizando patrón Fachada",
+        "version": "1.0.0"
+    },
+    "basePath": "/api",
+    "schemes": ["http"],
+    "paths": {
+        "/libros": {
+            "post": {
+                "summary": "Crear un nuevo libro",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "titulo": {"type": "string"},
+                            "autor": {"type": "string"},
+                            "categoria": {"type": "string"},
+                            "isbn": {"type": "string"}
+                        }
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Libro creado exitosamente"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listar todos los libros",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todos los libros"
+                    }
+                }
+            }
+        },
+        "/libros/buscar/isbn": {
+            "get": {
+                "summary": "Buscar libros por ISBN",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "isbn",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros encontrados por ISBN"
+                    }
+                }
+            }
+        },
+        "/libros/buscar/titulo": {
+            "get": {
+                "summary": "Buscar libros por título",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "titulo",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros encontrados por título"
+                    }
+                }
+            }
+        },
+        "/libros/buscar/autor": {
+            "get": {
+                "summary": "Buscar libros por autor",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "autor",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros encontrados por autor"
+                    }
+                }
+            }
+        },
+        "/libros/{libro_id}": {
+            "delete": {
+                "summary": "Eliminar un libro",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "libro_id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Libro eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "post": {
+                "summary": "Registrar un nuevo usuario",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body", 
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "nombre": {"type": "string"},
+                            "email": {"type": "string"},
+                            "telefono": {"type": "string"}
+                        }
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado exitosamente"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listar todos los usuarios",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todos los usuarios"
+                    }
+                }
+            }
+        },
+        "/usuarios/buscar/email": {
+            "get": {
+                "summary": "Buscar usuarios por email",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios encontrados por email"
+                    }
+                }
+            }
+        },
+        "/usuarios/{usuario_id}": {
+            "delete": {
+                "summary": "Eliminar un usuario",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "usuario_id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/prestamos": {
+            "post": {
+                "summary": "Realizar préstamo de libro",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "required": true, 
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "libro_id": {"type": "string"},
+                            "usuario_id": {"type": "string"},
+                            "dias_prestamo": {
+                                "type": "integer", 
+                                "default": 14,
+                                "description": "Número de días del préstamo (opcional)"
+                            }
+                        }
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Préstamo realizado exitosamente"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listar todos los préstamos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todos los préstamos"
+                    }
+                }
+            }
+        },
+        "/prestamos/{prestamo_id}/devolver": {
+            "post": {
+                "summary": "Devolver libro prestado",
+                "parameters": [{
+                    "in": "path",
+                    "name": "prestamo_id",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Libro devuelto exitosamente"
+                    }
+                }
+            }
+        }
+    }
+}
